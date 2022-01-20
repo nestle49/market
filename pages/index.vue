@@ -1,11 +1,19 @@
 <template>
-  <Tutorial/>
+  <ul>
+    <li>
+      <NuxtLink to="catalog">Catalog</NuxtLink>
+    </li>
+    <li>
+      <NuxtLink to="cart">Cart</NuxtLink>
+    </li>
+  </ul>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Vue, Component } from 'nuxt-property-decorator'
 
-export default Vue.extend({
-  name: 'IndexPage'
-})
+@Component
+export default class HomePage extends Vue {}
 </script>
+
+
