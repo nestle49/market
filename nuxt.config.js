@@ -12,16 +12,22 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'stylesheet preload prefetch',
+        href: 'https://fonts.googleapis.com/css?family=Material+Icons+Outlined&display=swap',
+        as: 'style',
+      },
     ]
   },
 
+
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-  ],
+  css: ['@/assets/shared/scss/common.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '@/plugins/axios-accessor',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -31,7 +37,13 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
+    '@nuxtjs/style-resources',
+    'cookie-universal-nuxt',
   ],
+
+  styleResources: {
+    scss: ['include-media/dist/_include-media.scss'],
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
@@ -47,8 +59,19 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    babel: {
-      // plugins: ['babel-plugin-proposal-decorators','transform-class-properties']
-    }
+    extractCSS: true,
+    terser: {
+      // https://github.com/terser/terser#compress-options
+      terserOptions: {
+        compress: {
+          drop_console: true,
+        },
+      },
+    },
+    loaders: {
+      scss: {
+        // additional scss variables
+      },
+    },
   }
 }

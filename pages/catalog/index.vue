@@ -1,16 +1,29 @@
 <template lang="pug">
-  .pug-example
-    p Catalog
-    a(href="https://badcode.ru", target="_blank") More interesting stuff on badcode.ru
-    div {{ message }}
+    section.catalog
+      .container
+        h1 Catalog
+        .catalog-list.d-flex.flex-wrap
+          card(v-for='product in products', :key='product.id' :product="product")
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-
-@Component
+import { productsStore } from '~/store'
+import Card from '@/components/pages/catalog/Card.vue'
+@Component({
+  components: {
+    Card
+  },
+})
 export default class Catalog extends Vue {
-  message: string = 'This is a message'
+
+  async fetch () {
+    await productsStore.fetchProducts()
+  }
+
+  get products (): any { /* mapGetters exist for class api?  */
+    return productsStore.products
+  }
 }
 </script>
 
