@@ -28,7 +28,7 @@ import { CART } from '~/constants'
 export default class Cart extends Vue {
   cart: any[] = [];
   isVisibleModal: boolean = false;
-  modalText: string = '54646';
+  modalText: string = '';
 
   async fetch () {
     await productsStore.fetchProducts()
