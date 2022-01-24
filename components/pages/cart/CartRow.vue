@@ -12,7 +12,8 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'nuxt-property-decorator'
-import Btn from "~/components/Button.vue";
+import Btn from "~/components/Button.vue"
+import ProductStorage from '~/types/productStorage'
 import { CART } from '~/constants'
 @Component({
   components: {
@@ -28,8 +29,8 @@ export default class Card extends Vue {
   @Emit('recalculate')
   addItemToCart() {
     const productId: number = this.product.id
-    let products: any[] = [];
-    const cart: any = sessionStorage.getItem(CART)
+    let products: ProductStorage[] = [];
+    const cart: string | null = sessionStorage.getItem(CART)
 
     if (cart) {
       products = [...JSON.parse(cart)]
@@ -44,8 +45,8 @@ export default class Card extends Vue {
   @Emit('recalculate')
   removeItemFromCart() {
     const productId: number = this.product.id
-    let products: any[] = [];
-    const cart: any = sessionStorage.getItem(CART)
+    let products: ProductStorage[] = [];
+    const cart: string | null = sessionStorage.getItem(CART)
 
     if (cart) {
       products = [...JSON.parse(cart)]

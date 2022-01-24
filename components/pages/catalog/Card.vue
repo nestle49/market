@@ -36,6 +36,7 @@
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import Link from '@/components/Link.vue'
 import Btn from "~/components/Button.vue";
+import ProductStorage from '~/types/productStorage'
 import { CART } from '~/constants'
 @Component({
   components: {
@@ -49,10 +50,10 @@ export default class Card extends Vue {
    */
   @Prop({ default: () => {} }) readonly product!: any
 
-  addItemToCart() {
+  addItemToCart(): void {
     const productId: number = this.product.id
-    let products: any[] = [];
-    const cart: any = sessionStorage.getItem(CART)
+    let products: ProductStorage[] = [];
+    const cart: string | null = sessionStorage.getItem(CART)
 
     if (cart) {
       products = [...JSON.parse(cart)]
@@ -63,10 +64,10 @@ export default class Card extends Vue {
     }
     sessionStorage.setItem(CART, JSON.stringify(products))
   }
-  removeItemFromCart() {
+  removeItemFromCart(): void {
     const productId: number = this.product.id
-    let products: any[] = [];
-    const cart: any = sessionStorage.getItem(CART)
+    let products: ProductStorage[] = [];
+    const cart: string | null = sessionStorage.getItem(CART)
 
     if (cart) {
       products = [...JSON.parse(cart)]

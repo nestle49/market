@@ -9,6 +9,7 @@
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
 import { productsStore } from '~/store'
+import Product from '~/types/product'
 import Card from '@/components/pages/catalog/Card.vue'
 @Component({
   components: {
@@ -17,11 +18,11 @@ import Card from '@/components/pages/catalog/Card.vue'
 })
 export default class Catalog extends Vue {
 
-  async fetch () {
+  async fetch() {
     await productsStore.fetchProducts()
   }
 
-  get products (): any { /* mapGetters exist for class api?  */
+  get products(): Product[] { /* mapGetters exist for class api?  */
     return productsStore.products
   }
 }

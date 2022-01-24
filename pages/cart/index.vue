@@ -16,6 +16,8 @@ import { Vue, Component } from 'nuxt-property-decorator'
 import { productsStore } from '~/store'
 import CartRow from '@/components/pages/cart/CartRow.vue'
 import Modal from '@/components/pages/cart/Modal.vue'
+import Product from '~/types/product'
+import ProductStorage from '~/types/productStorage'
 import Btn from "~/components/Button.vue";
 import { CART } from '~/constants'
 @Component({
@@ -30,11 +32,11 @@ export default class Cart extends Vue {
   isVisibleModal: boolean = false;
   modalText: string = '';
 
-  async fetch () {
+  async fetch() {
     await productsStore.fetchProducts()
   }
 
-  get products () { /* mapGetters exist for class api?  */
+  get products() : Product[] { /* mapGetters exist for class api?  */
     return productsStore.products
   }
 
@@ -42,22 +44,22 @@ export default class Cart extends Vue {
     return this.cart.reduce((sum: number, product: any) => sum + product.price * product.count, 0).toFixed(2)
   }
 
-  checkout() {
+  checkout(): void {
     this.isVisibleModal = true
     this.modalText = 'Successfully';
   }
 
-  closePopup() {
+  closePopup(): void {
     this.isVisibleModal = false
     this.modalText = '';
   }
 
-  getCartProducts () {
-    let products: any[] = [];
-    const cart: any = sessionStorage.getItem(CART)
+  getCartProducts(): void {
+    let products: ProductStorage[] = [];
+    const cart: string | null = sessionStorage.getItem(CART)
     if (cart) products = [...JSON.parse(cart)]
 
-    const productsDetailed = products.map(product => {
+    const productsDetailed : any[] = products.map(product => {
       return { ...this.products.find(e => e.id === product.id), count: product.count }
     });
 
